@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="660" viewBox="0 0 1120 660" role="img" aria-labelledby="title desc">
+<title id="title">03_cls_supervision</title>
+<desc id="desc">蓝色为主分割流程，紫色为辅助分支，浅橙色为标签或损失，绿色为输出。</desc>
+<defs>
+<marker id="main" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#8A9BB0" stroke-width="1.5"/></marker>
+<marker id="aux" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#A48BBC" stroke-width="1.5"/></marker>
+</defs>
+<rect width="1120" height="660" rx="20" fill="white"/>
+<g font-family="Arial, 'Noto Sans CJK SC', 'Droid Sans Fallback', sans-serif">
+<path d="M42 103 H1078" stroke="#E6EBF2"/>
+<rect x="42" y="420" width="458" height="184" rx="18" fill="#EEF5FF" fill-opacity="0.42" stroke="#B7CFF1" stroke-dasharray="5 6"/>
+<text x="62" y="451" font-size="16" font-weight="700" fill="#255A9D" text-anchor="start">主分割分支</text>
+<rect x="548" y="420" width="532" height="184" rx="18" fill="#F4F0FF" fill-opacity="0.42" stroke="#D4C6EF" stroke-dasharray="5 6"/>
+<text x="568" y="451" font-size="16" font-weight="700" fill="#7050A2" text-anchor="start">训练辅助分支</text>
+<path d="M 302 182.0 L 362 182.0" fill="none" stroke="#8A9BB0" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#main)"/>
+<path d="M 746 182.0 L 806 182.0" fill="none" stroke="#8A9BB0" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#main)"/>
+<path d="M 943.0 222 L 943 260 L 554 260 L 554.0 296" fill="none" stroke="#8A9BB0" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#main)"/>
+<path d="M 943.0 222 L 943.0 296" fill="none" stroke="#A48BBC" stroke-width="1.8" stroke-linejoin="round" stroke-dasharray="6 5" marker-end="url(#aux)"/>
+<path d="M 554.0 376 L 554 396 L 177 396 L 177.0 484" fill="none" stroke="#8A9BB0" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#main)"/>
+<path d="M 290 524.0 L 324 524.0" fill="none" stroke="#8A9BB0" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#main)"/>
+<path d="M 554.0 376 L 554 396 L 707 396 L 707.0 484" fill="none" stroke="#A48BBC" stroke-width="1.8" stroke-linejoin="round" stroke-dasharray="6 5" marker-end="url(#aux)"/>
+<path d="M 844 524.0 L 878 524.0" fill="none" stroke="#A48BBC" stroke-width="1.8" stroke-linejoin="round" stroke-dasharray="6 5" marker-end="url(#aux)"/>
+<path d="M 943.0 376 L 943 402 L 968 402 L 968.0 484" fill="none" stroke="#A48BBC" stroke-width="1.8" stroke-linejoin="round" stroke-dasharray="6 5" marker-end="url(#aux)"/>
+<text x="42" y="48" font-size="16" font-weight="700" fill="#64748B" text-anchor="start">03</text>
+<text x="88" y="49" font-size="27" font-weight="700" fill="#172B4D" text-anchor="start">混合视野与 CLS 辅助监督</text>
+<text x="42" y="82" font-size="16" font-weight="400" fill="#64748B" text-anchor="start">每张原图每次只生成一个训练视图；分类标签来自对应 GT</text>
+<rect x="42" y="145" width="260" height="80" rx="13" fill="#172B4D" opacity="0.035"/>
+<rect x="42" y="142" width="260" height="80" rx="13" fill="#F6F8FB" stroke="#DCE3EC" stroke-width="1.3"/>
+<rect x="43" y="160" width="4" height="44" rx="2" fill="#475569" opacity="0.7"/>
+<text x="172.0" y="189.0" font-size="21" font-weight="700" fill="#475569" text-anchor="middle">1024×1024 原图与 GT</text>
+<rect x="362" y="145" width="384" height="80" rx="13" fill="#172B4D" opacity="0.035"/>
+<rect x="362" y="142" width="384" height="80" rx="13" fill="#EEF5FF" stroke="#B7CFF1" stroke-width="1.3"/>
+<rect x="363" y="160" width="4" height="44" rx="2" fill="#255A9D" opacity="0.7"/>
+<text x="554.0" y="182.0" font-size="21" font-weight="700" fill="#255A9D" text-anchor="middle">随机选一种视图</text>
+<text x="554.0" y="207.0" font-size="15" font-weight="400" fill="#64748B" text-anchor="middle">整图 50% · 640 裁剪 25% · 512 裁剪 25%</text>
+<rect x="806" y="145" width="274" height="80" rx="13" fill="#172B4D" opacity="0.035"/>
+<rect x="806" y="142" width="274" height="80" rx="13" fill="#EEF5FF" stroke="#B7CFF1" stroke-width="1.3"/>
+<rect x="807" y="160" width="4" height="44" rx="2" fill="#255A9D" opacity="0.7"/>
+<text x="943.0" y="182.0" font-size="21" font-weight="700" fill="#255A9D" text-anchor="middle">统一至 640×640</text>
+<text x="943.0" y="207.0" font-size="15" font-weight="400" fill="#64748B" text-anchor="middle">RGB 与 GT 同步几何变换</text>
+<rect x="362" y="299" width="384" height="80" rx="13" fill="#172B4D" opacity="0.035"/>
+<rect x="362" y="296" width="384" height="80" rx="13" fill="#EEF5FF" stroke="#B7CFF1" stroke-width="1.3"/>
+<rect x="363" y="314" width="4" height="44" rx="2" fill="#255A9D" opacity="0.7"/>
+<text x="554.0" y="336.0" font-size="21" font-weight="700" fill="#255A9D" text-anchor="middle">DINOv3＋交互式 Adapter</text>
+<text x="554.0" y="361.0" font-size="15" font-weight="400" fill="#64748B" text-anchor="middle">多尺度特征与最后一层 CLS</text>
+<rect x="64" y="487" width="226" height="80" rx="13" fill="#172B4D" opacity="0.035"/>
+<rect x="64" y="484" width="226" height="80" rx="13" fill="#EEF5FF" stroke="#B7CFF1" stroke-width="1.3"/>
+<rect x="65" y="502" width="4" height="44" rx="2" fill="#255A9D" opacity="0.7"/>
+<text x="177.0" y="524.0" font-size="21" font-weight="700" fill="#255A9D" text-anchor="middle">Mask2Former</text>
+<text x="177.0" y="549.0" font-size="15" font-weight="400" fill="#64748B" text-anchor="middle">多尺度特征 → 分割</text>
+<rect x="324" y="487" width="154" height="80" rx="13" fill="#172B4D" opacity="0.035"/>
+<rect x="324" y="484" width="154" height="80" rx="13" fill="#FFF6E9" stroke="#EED5AD" stroke-width="1.3"/>
+<rect x="325" y="502" width="4" height="44" rx="2" fill="#956122" opacity="0.7"/>
+<text x="401.0" y="531.0" font-size="21" font-weight="700" fill="#956122" text-anchor="middle">主分割损失</text>
+<rect x="570" y="487" width="274" height="80" rx="13" fill="#172B4D" opacity="0.035"/>
+<rect x="570" y="484" width="274" height="80" rx="13" fill="#F4F0FF" stroke="#D4C6EF" stroke-width="1.3"/>
+<rect x="571" y="502" width="4" height="44" rx="2" fill="#7050A2" opacity="0.7"/>
+<text x="707.0" y="524.0" font-size="21" font-weight="700" fill="#7050A2" text-anchor="middle">CLS 五类分类头</text>
+<text x="707.0" y="549.0" font-size="15" font-weight="400" fill="#64748B" text-anchor="middle">LayerNorm＋Linear(1280, 5)</text>
+<rect x="878" y="487" width="180" height="80" rx="13" fill="#172B4D" opacity="0.035"/>
+<rect x="878" y="484" width="180" height="80" rx="13" fill="#FFF6E9" stroke="#EED5AD" stroke-width="1.3"/>
+<rect x="879" y="502" width="4" height="44" rx="2" fill="#956122" opacity="0.7"/>
+<text x="968.0" y="524.0" font-size="21" font-weight="700" fill="#956122" text-anchor="middle">存在性 BCE</text>
+<text x="968.0" y="549.0" font-size="15" font-weight="400" fill="#64748B" text-anchor="middle">当前视图有哪些类</text>
+<rect x="806" y="299" width="274" height="80" rx="13" fill="#172B4D" opacity="0.035"/>
+<rect x="806" y="296" width="274" height="80" rx="13" fill="#FFF6E9" stroke="#EED5AD" stroke-width="1.3"/>
+<rect x="807" y="314" width="4" height="44" rx="2" fill="#956122" opacity="0.7"/>
+<text x="943.0" y="336.0" font-size="21" font-weight="700" fill="#956122" text-anchor="middle">从对应 GT 生成标签</text>
+<text x="943.0" y="361.0" font-size="15" font-weight="400" fill="#64748B" text-anchor="middle">五维 0/1 类别存在性</text>
+<text x="42" y="640" font-size="16" font-weight="400" fill="#64748B" text-anchor="start">辅助头仅在训练时使用；推理保留主分割分支。</text>
+</g></svg>

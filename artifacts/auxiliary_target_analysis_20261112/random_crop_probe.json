@@ -1,0 +1,88 @@
+{
+  "manifest_sha256": "7c07b038c7365bdd306753fe0ba4255369b5b85948a340f65c6aa2595d1ba195",
+  "seed": 20261112,
+  "sample_images": 500,
+  "sampling": "Uniform random images without replacement; eight independent uniform crop origins per image and size; 1024 uses one full frame. Correlated crops, descriptive estimate only.",
+  "crop_side_units": "Native-image pixels before resize to model input",
+  "label_order": [
+    "regolith",
+    "rock",
+    "crater",
+    "mountain",
+    "sky"
+  ],
+  "by_crop_side": {
+    "512": {
+      "crops": 4000,
+      "class_presence_rate": {
+        "regolith": 1.0,
+        "rock": 0.70425,
+        "crater": 0.402,
+        "mountain": 0.55575,
+        "sky": 0.53925
+      },
+      "all_five_rate": 0.2725,
+      "images_with_positive_and_negative_crops": {
+        "regolith": 0,
+        "rock": 452,
+        "crater": 293,
+        "mountain": 471,
+        "sky": 495
+      }
+    },
+    "640": {
+      "crops": 4000,
+      "class_presence_rate": {
+        "regolith": 1.0,
+        "rock": 0.9135,
+        "crater": 0.5395,
+        "mountain": 0.7545,
+        "sky": 0.718
+      },
+      "all_five_rate": 0.3915,
+      "images_with_positive_and_negative_crops": {
+        "regolith": 0,
+        "rock": 222,
+        "crater": 164,
+        "mountain": 387,
+        "sky": 449
+      }
+    },
+    "768": {
+      "crops": 4000,
+      "class_presence_rate": {
+        "regolith": 1.0,
+        "rock": 1.0,
+        "crater": 0.6215,
+        "mountain": 0.9565,
+        "sky": 0.98725
+      },
+      "all_five_rate": 0.569,
+      "images_with_positive_and_negative_crops": {
+        "regolith": 0,
+        "rock": 0,
+        "crater": 20,
+        "mountain": 10,
+        "sky": 32
+      }
+    },
+    "1024": {
+      "crops": 500,
+      "class_presence_rate": {
+        "regolith": 1.0,
+        "rock": 1.0,
+        "crater": 0.654,
+        "mountain": 0.966,
+        "sky": 1.0
+      },
+      "all_five_rate": 0.62,
+      "images_with_positive_and_negative_crops": {
+        "regolith": 0,
+        "rock": 0,
+        "crater": 0,
+        "mountain": 0,
+        "sky": 0
+      }
+    }
+  }
+}

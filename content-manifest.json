@@ -1,0 +1,22 @@
+{
+  "source": "docs/moonseg_model_proposal_20261113.md",
+  "source_sha256": "e1f4088b7e2df61d843b4edc178e2054c047bf25eea86be1713bd3de81e5cd84",
+  "files": [
+    "artifacts/auxiliary_target_analysis_20261112/random_crop_probe.json",
+    "artifacts/auxiliary_target_analysis_20261112/summary.json",
+    "docs/assets/moonseg_proposal/01_main_model.svg",
+    "docs/assets/moonseg_proposal/02_model_fusion.svg",
+    "docs/assets/moonseg_proposal/03_cls_supervision.svg",
+    "docs/assets/moonseg_proposal/04_pixel_supervision.svg",
+    "docs/assets/moonseg_proposal/05_patch_supervision.svg",
+    "docs/assets/moonseg_proposal/07_full_architecture.svg",
+    "runs/dinov3_l16_ade20k_adapter_m2f_e20_20261112/history.jsonl",
+    "runs/dinov3_l16_simple_fpn_mask2former_short/history.jsonl",
+    "runs/dinov3_l16_vit_adapter_mask2former_short/history.jsonl",
+    "runs/swin_l_ade20k_mask2former_frozen_e20_20261112/history.jsonl",
+    "runs/yolo26m_e06_low3e6_bnfreeze_e4/analysis/report_multiscale_20261105/report.md",
+    "runs/yolo26m_sem_b16_lr3e4_e20/history.jsonl",
+    "runs/yolo26x_ade20k_enc3e5_head3e4_warm2_e20_20261112/history.jsonl",
+    "runs/yolo26x_cityscapes_originalrecipe_b16_lr3e4_e20_20261112/history.jsonl"
+  ]
+}

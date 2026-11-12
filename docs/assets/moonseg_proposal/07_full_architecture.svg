@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="806" viewBox="0 0 1120 806" role="img" aria-labelledby="title desc">
+<title id="title">07_full_architecture</title>
+<desc id="desc">蓝色为主分割流程，紫色为辅助分支，浅橙色为标签或损失，绿色为输出。</desc>
+<defs>
+<marker id="main" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#8A9BB0" stroke-width="1.5"/></marker>
+<marker id="aux" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#A48BBC" stroke-width="1.5"/></marker>
+</defs>
+<rect width="1120" height="806" rx="20" fill="white"/>
+<g font-family="Arial, 'Noto Sans CJK SC', 'Droid Sans Fallback', sans-serif">
+<path d="M42 103 H1078" stroke="#E6EBF2"/>
+<rect x="42" y="126" width="420" height="616" rx="18" fill="#EEF5FF" fill-opacity="0.42" stroke="#B7CFF1" stroke-dasharray="5 6"/>
+<text x="62" y="157" font-size="16" font-weight="700" fill="#255A9D" text-anchor="start">主分割流程 · 训练与推理</text>
+<rect x="552" y="126" width="526" height="616" rx="18" fill="#F4F0FF" fill-opacity="0.42" stroke="#D4C6EF" stroke-dasharray="5 6"/>
+<text x="572" y="157" font-size="16" font-weight="700" fill="#7050A2" text-anchor="start">训练监督 · 辅助头可分别启用</text>
+<path d="M 252.0 264 L 252.0 296" fill="none" stroke="#8A9BB0" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#main)"/>
+<path d="M 252.0 376 L 252.0 408" fill="none" stroke="#8A9BB0" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#main)"/>
+<path d="M 252.0 488 L 252.0 520" fill="none" stroke="#8A9BB0" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#main)"/>
+<path d="M 252.0 600 L 252.0 632" fill="none" stroke="#8A9BB0" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#main)"/>
+<path d="M 432 336.0 L 498 336 L 498 224 L 582 224.0" fill="none" stroke="#A48BBC" stroke-width="1.8" stroke-linejoin="round" stroke-dasharray="6 5" marker-end="url(#aux)"/>
+<path d="M 432 336.0 L 480 336 L 480 366 L 582 366.0" fill="none" stroke="#A48BBC" stroke-width="1.8" stroke-linejoin="round" stroke-dasharray="6 5" marker-end="url(#aux)"/>
+<path d="M 432 448.0 L 498 448 L 498 508 L 582 508.0" fill="none" stroke="#A48BBC" stroke-width="1.8" stroke-linejoin="round" stroke-dasharray="6 5" marker-end="url(#aux)"/>
+<path d="M 432 560.0 L 480 560 L 480 672 L 582 672.0" fill="none" stroke="#A48BBC" stroke-width="1.8" stroke-linejoin="round" stroke-dasharray="6 5" marker-end="url(#aux)"/>
+<text x="42" y="48" font-size="16" font-weight="700" fill="#64748B" text-anchor="start">07</text>
+<text x="88" y="49" font-size="27" font-weight="700" fill="#172B4D" text-anchor="start">完整方案：主分割流程与可选训练监督</text>
+<text x="42" y="82" font-size="16" font-weight="400" fill="#64748B" text-anchor="start">主模型固定为 DINOv3 ViT-H+/16；各项辅助监督分别验证后再决定组合</text>
+<rect x="72" y="187" width="360" height="80" rx="13" fill="#172B4D" opacity="0.035"/>
+<rect x="72" y="184" width="360" height="80" rx="13" fill="#F6F8FB" stroke="#DCE3EC" stroke-width="1.3"/>
+<rect x="73" y="202" width="4" height="44" rx="2" fill="#475569" opacity="0.7"/>
+<text x="252.0" y="224.0" font-size="21" font-weight="700" fill="#475569" text-anchor="middle">整图或随机裁剪视图</text>
+<text x="252.0" y="249.0" font-size="15" font-weight="400" fill="#64748B" text-anchor="middle">统一至 640×640</text>
+<rect x="72" y="299" width="360" height="80" rx="13" fill="#172B4D" opacity="0.035"/>
+<rect x="72" y="296" width="360" height="80" rx="13" fill="#EEF5FF" stroke="#B7CFF1" stroke-width="1.3"/>
+<rect x="73" y="314" width="4" height="44" rx="2" fill="#255A9D" opacity="0.7"/>
+<text x="252.0" y="336.0" font-size="21" font-weight="700" fill="#255A9D" text-anchor="middle">DINOv3-H+＋ViT-Adapter</text>
+<text x="252.0" y="361.0" font-size="15" font-weight="400" fill="#64748B" text-anchor="middle">ViT-H+/16 · LVD-1689M · 交互式</text>
+<rect x="72" y="411" width="360" height="80" rx="13" fill="#172B4D" opacity="0.035"/>
+<rect x="72" y="408" width="360" height="80" rx="13" fill="#EEF5FF" stroke="#B7CFF1" stroke-width="1.3"/>
+<rect x="73" y="426" width="4" height="44" rx="2" fill="#255A9D" opacity="0.7"/>
+<text x="252.0" y="448.0" font-size="21" font-weight="700" fill="#255A9D" text-anchor="middle">Pixel Decoder</text>
+<text x="252.0" y="473.0" font-size="15" font-weight="400" fill="#64748B" text-anchor="middle">解码多尺度特征</text>
+<rect x="72" y="523" width="360" height="80" rx="13" fill="#172B4D" opacity="0.035"/>
+<rect x="72" y="520" width="360" height="80" rx="13" fill="#EEF5FF" stroke="#B7CFF1" stroke-width="1.3"/>
+<rect x="73" y="538" width="4" height="44" rx="2" fill="#255A9D" opacity="0.7"/>
+<text x="252.0" y="560.0" font-size="21" font-weight="700" fill="#255A9D" text-anchor="middle">Query Decoder＋掩码预测</text>
+<text x="252.0" y="585.0" font-size="15" font-weight="400" fill="#64748B" text-anchor="middle">生成类别与掩码</text>
+<rect x="72" y="635" width="360" height="80" rx="13" fill="#172B4D" opacity="0.035"/>
+<rect x="72" y="632" width="360" height="80" rx="13" fill="#EAF7F3" stroke="#ACD9CB" stroke-width="1.3"/>
+<rect x="73" y="650" width="4" height="44" rx="2" fill="#267561" opacity="0.7"/>
+<text x="252.0" y="672.0" font-size="21" font-weight="700" fill="#267561" text-anchor="middle">五类分割结果</text>
+<text x="252.0" y="697.0" font-size="15" font-weight="400" fill="#64748B" text-anchor="middle">月壤 · 岩石 · 撞击坑 · 山体 · 天空</text>
+<rect x="582" y="187" width="466" height="80" rx="13" fill="#172B4D" opacity="0.035"/>
+<rect x="582" y="184" width="466" height="80" rx="13" fill="#F4F0FF" stroke="#D4C6EF" stroke-width="1.3"/>
+<rect x="583" y="202" width="4" height="44" rx="2" fill="#7050A2" opacity="0.7"/>
+<text x="815.0" y="224.0" font-size="21" font-weight="700" fill="#7050A2" text-anchor="middle">CLS 辅助头</text>
+<text x="815.0" y="249.0" font-size="15" font-weight="400" fill="#64748B" text-anchor="middle">全局语义：当前视图有哪些类</text>
+<rect x="582" y="329" width="466" height="80" rx="13" fill="#172B4D" opacity="0.035"/>
+<rect x="582" y="326" width="466" height="80" rx="13" fill="#F4F0FF" stroke="#D4C6EF" stroke-width="1.3"/>
+<rect x="583" y="344" width="4" height="44" rx="2" fill="#7050A2" opacity="0.7"/>
+<text x="815.0" y="366.0" font-size="21" font-weight="700" fill="#7050A2" text-anchor="middle">Patch 辅助头</text>
+<text x="815.0" y="391.0" font-size="15" font-weight="400" fill="#64748B" text-anchor="middle">局部语义：16×16 区域的类别占比</text>
+<rect x="582" y="471" width="466" height="80" rx="13" fill="#172B4D" opacity="0.035"/>
+<rect x="582" y="468" width="466" height="80" rx="13" fill="#F4F0FF" stroke="#D4C6EF" stroke-width="1.3"/>
+<rect x="583" y="486" width="4" height="44" rx="2" fill="#7050A2" opacity="0.7"/>
+<text x="815.0" y="508.0" font-size="21" font-weight="700" fill="#7050A2" text-anchor="middle">像素辅助头</text>
+<text x="815.0" y="533.0" font-size="15" font-weight="400" fill="#64748B" text-anchor="middle">共享 mask feature 的逐像素监督</text>
+<rect x="582" y="635" width="466" height="80" rx="13" fill="#172B4D" opacity="0.035"/>
+<rect x="582" y="632" width="466" height="80" rx="13" fill="#FFF6E9" stroke="#EED5AD" stroke-width="1.3"/>
+<rect x="583" y="650" width="4" height="44" rx="2" fill="#956122" opacity="0.7"/>
+<text x="815.0" y="672.0" font-size="21" font-weight="700" fill="#956122" text-anchor="middle">Mask2Former 主损失</text>
+<text x="815.0" y="697.0" font-size="15" font-weight="400" fill="#64748B" text-anchor="middle">可选：按真实类别加权掩码损失</text>
+<text x="42" y="779" font-size="16" font-weight="400" fill="#64748B" text-anchor="start">实线：主要预测路径    虚线：训练监督    辅助头在推理时移除</text>
+</g></svg>

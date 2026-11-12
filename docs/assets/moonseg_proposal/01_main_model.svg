@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="472" viewBox="0 0 1120 472" role="img" aria-labelledby="title desc">
+<title id="title">01_main_model</title>
+<desc id="desc">蓝色为主分割流程，紫色为辅助分支，浅橙色为标签或损失，绿色为输出。</desc>
+<defs>
+<marker id="main" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#8A9BB0" stroke-width="1.5"/></marker>
+<marker id="aux" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#A48BBC" stroke-width="1.5"/></marker>
+</defs>
+<rect width="1120" height="472" rx="20" fill="white"/>
+<g font-family="Arial, 'Noto Sans CJK SC', 'Droid Sans Fallback', sans-serif">
+<path d="M42 103 H1078" stroke="#E6EBF2"/>
+<rect x="245" y="132" width="394" height="282" rx="18" fill="#EEF5FF" fill-opacity="0.42" stroke="#B7CFF1" stroke-dasharray="5 6"/>
+<text x="265" y="163" font-size="16" font-weight="700" fill="#255A9D" text-anchor="start">交互式特征提取</text>
+<path d="M 202 272.0 L 224 272 L 224 230 L 277 230.0" fill="none" stroke="#8A9BB0" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#main)"/>
+<path d="M 202 272.0 L 224 272 L 224 354 L 277 354.0" fill="none" stroke="#8A9BB0" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#main)"/>
+<path d="M 442.0 270 L 442.0 314" fill="none" stroke="#8A9BB0" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#main)"/>
+<path d="M 607 354.0 L 624 354 L 624 230 L 607 230.0" fill="none" stroke="#8A9BB0" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#main)"/>
+<path d="M 607 354.0 L 702 354.0" fill="none" stroke="#8A9BB0" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#main)"/>
+<path d="M 892 354.0 L 944 354.0" fill="none" stroke="#8A9BB0" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#main)"/>
+<text x="42" y="48" font-size="16" font-weight="700" fill="#64748B" text-anchor="start">01</text>
+<text x="88" y="49" font-size="27" font-weight="700" fill="#172B4D" text-anchor="start">主模型架构</text>
+<text x="42" y="82" font-size="16" font-weight="400" fill="#64748B" text-anchor="start">DINOv3 ViT-H+/16 · LVD-1689M · 五类语义分割</text>
+<rect x="42" y="235" width="160" height="80" rx="13" fill="#172B4D" opacity="0.035"/>
+<rect x="42" y="232" width="160" height="80" rx="13" fill="#F6F8FB" stroke="#DCE3EC" stroke-width="1.3"/>
+<rect x="43" y="250" width="4" height="44" rx="2" fill="#475569" opacity="0.7"/>
+<text x="122.0" y="272.0" font-size="21" font-weight="700" fill="#475569" text-anchor="middle">RGB 图像</text>
+<text x="122.0" y="297.0" font-size="15" font-weight="400" fill="#64748B" text-anchor="middle">同一图像输入</text>
+<rect x="277" y="193" width="330" height="80" rx="13" fill="#172B4D" opacity="0.035"/>
+<rect x="277" y="190" width="330" height="80" rx="13" fill="#EEF5FF" stroke="#B7CFF1" stroke-width="1.3"/>
+<rect x="278" y="208" width="4" height="44" rx="2" fill="#255A9D" opacity="0.7"/>
+<text x="442.0" y="230.0" font-size="21" font-weight="700" fill="#255A9D" text-anchor="middle">DINOv3 ViT-H+/16</text>
+<text x="442.0" y="255.0" font-size="15" font-weight="400" fill="#64748B" text-anchor="middle">LVD-1689M 预训练</text>
+<rect x="277" y="317" width="330" height="80" rx="13" fill="#172B4D" opacity="0.035"/>
+<rect x="277" y="314" width="330" height="80" rx="13" fill="#EEF5FF" stroke="#B7CFF1" stroke-width="1.3"/>
+<rect x="278" y="332" width="4" height="44" rx="2" fill="#255A9D" opacity="0.7"/>
+<text x="442.0" y="354.0" font-size="21" font-weight="700" fill="#255A9D" text-anchor="middle">交互式 ViT-Adapter</text>
+<text x="442.0" y="379.0" font-size="15" font-weight="400" fill="#64748B" text-anchor="middle">生成多尺度特征</text>
+<rect x="702" y="317" width="190" height="80" rx="13" fill="#172B4D" opacity="0.035"/>
+<rect x="702" y="314" width="190" height="80" rx="13" fill="#EEF5FF" stroke="#B7CFF1" stroke-width="1.3"/>
+<rect x="703" y="332" width="4" height="44" rx="2" fill="#255A9D" opacity="0.7"/>
+<text x="797.0" y="354.0" font-size="21" font-weight="700" fill="#255A9D" text-anchor="middle">Mask2Former</text>
+<text x="797.0" y="379.0" font-size="15" font-weight="400" fill="#64748B" text-anchor="middle">多尺度分割解码</text>
+<rect x="944" y="317" width="150" height="80" rx="13" fill="#172B4D" opacity="0.035"/>
+<rect x="944" y="314" width="150" height="80" rx="13" fill="#EAF7F3" stroke="#ACD9CB" stroke-width="1.3"/>
+<rect x="945" y="332" width="4" height="44" rx="2" fill="#267561" opacity="0.7"/>
+<text x="1019.0" y="354.0" font-size="21" font-weight="700" fill="#267561" text-anchor="middle">五类分割</text>
+<text x="1019.0" y="379.0" font-size="15" font-weight="400" fill="#64748B" text-anchor="middle">像素级类别</text>
+<text x="42" y="451" font-size="16" font-weight="400" fill="#64748B" text-anchor="start">类别：月壤 · 岩石 · 撞击坑 · 山体 · 天空</text>
+</g></svg>

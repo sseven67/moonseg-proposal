@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="636" viewBox="0 0 1120 636" role="img" aria-labelledby="title desc">
+<title id="title">02_model_fusion</title>
+<desc id="desc">蓝色为主分割流程，紫色为辅助分支，浅橙色为标签或损失，绿色为输出。</desc>
+<defs>
+<marker id="main" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#8A9BB0" stroke-width="1.5"/></marker>
+<marker id="aux" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#A48BBC" stroke-width="1.5"/></marker>
+</defs>
+<rect width="1120" height="636" rx="20" fill="white"/>
+<g font-family="Arial, 'Noto Sans CJK SC', 'Droid Sans Fallback', sans-serif">
+<path d="M42 103 H1078" stroke="#E6EBF2"/>
+<rect x="276" y="126" width="330" height="310" rx="18" fill="#EEF5FF" fill-opacity="0.42" stroke="#B7CFF1" stroke-dasharray="5 6"/>
+<text x="296" y="157" font-size="16" font-weight="700" fill="#255A9D" text-anchor="start">两个独立分割分支</text>
+<path d="M 222 300.0 L 248 300 L 248 222 L 304 222.0" fill="none" stroke="#8A9BB0" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#main)"/>
+<path d="M 222 300.0 L 248 300 L 248 362 L 304 362.0" fill="none" stroke="#8A9BB0" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#main)"/>
+<path d="M 578 222.0 L 640 222 L 640 300 L 686 300.0" fill="none" stroke="#8A9BB0" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#main)"/>
+<path d="M 578 362.0 L 640 362 L 640 300 L 686 300.0" fill="none" stroke="#8A9BB0" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#main)"/>
+<path d="M 781.0 340 L 781.0 410" fill="none" stroke="#8A9BB0" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#main)"/>
+<path d="M 578 222.0 L 998 222 L 998.0 260" fill="none" stroke="#8A9BB0" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#main)"/>
+<path d="M 876 450.0 L 908 450.0" fill="none" stroke="#8A9BB0" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#main)"/>
+<path d="M 998.0 340 L 998.0 410" fill="none" stroke="#8A9BB0" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#main)"/>
+<path d="M 998.0 490 L 998.0 528" fill="none" stroke="#8A9BB0" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#main)"/>
+<text x="42" y="48" font-size="16" font-weight="700" fill="#64748B" text-anchor="start">02</text>
+<text x="88" y="49" font-size="27" font-weight="700" fill="#172B4D" text-anchor="start">备选：双模型残差融合</text>
+<text x="42" y="82" font-size="16" font-weight="400" fill="#64748B" text-anchor="start">两组五类概率 → 10 通道融合 → 在 DINO 基础上学习修正</text>
+<rect x="42" y="263" width="180" height="80" rx="13" fill="#172B4D" opacity="0.035"/>
+<rect x="42" y="260" width="180" height="80" rx="13" fill="#F6F8FB" stroke="#DCE3EC" stroke-width="1.3"/>
+<rect x="43" y="278" width="4" height="44" rx="2" fill="#475569" opacity="0.7"/>
+<text x="132.0" y="307.0" font-size="21" font-weight="700" fill="#475569" text-anchor="middle">同一 RGB 图像</text>
+<rect x="304" y="185" width="274" height="80" rx="13" fill="#172B4D" opacity="0.035"/>
+<rect x="304" y="182" width="274" height="80" rx="13" fill="#EEF5FF" stroke="#B7CFF1" stroke-width="1.3"/>
+<rect x="305" y="200" width="4" height="44" rx="2" fill="#255A9D" opacity="0.7"/>
+<text x="441.0" y="222.0" font-size="21" font-weight="700" fill="#255A9D" text-anchor="middle">DINOv3 主模型</text>
+<text x="441.0" y="247.0" font-size="15" font-weight="400" fill="#64748B" text-anchor="middle">输出五类概率 pDINO</text>
+<rect x="304" y="325" width="274" height="80" rx="13" fill="#172B4D" opacity="0.035"/>
+<rect x="304" y="322" width="274" height="80" rx="13" fill="#EEF5FF" stroke="#B7CFF1" stroke-width="1.3"/>
+<rect x="305" y="340" width="4" height="44" rx="2" fill="#255A9D" opacity="0.7"/>
+<text x="441.0" y="362.0" font-size="21" font-weight="700" fill="#255A9D" text-anchor="middle">YOLO26m / 26x</text>
+<text x="441.0" y="387.0" font-size="15" font-weight="400" fill="#64748B" text-anchor="middle">输出五类概率 pYOLO</text>
+<rect x="686" y="263" width="190" height="80" rx="13" fill="#172B4D" opacity="0.035"/>
+<rect x="686" y="260" width="190" height="80" rx="13" fill="#EEF5FF" stroke="#B7CFF1" stroke-width="1.3"/>
+<rect x="687" y="278" width="4" height="44" rx="2" fill="#255A9D" opacity="0.7"/>
+<text x="781.0" y="300.0" font-size="21" font-weight="700" fill="#255A9D" text-anchor="middle">拼接为 10 通道</text>
+<text x="781.0" y="325.0" font-size="15" font-weight="400" fill="#64748B" text-anchor="middle">尺寸与类别顺序一致</text>
+<rect x="686" y="413" width="190" height="80" rx="13" fill="#172B4D" opacity="0.035"/>
+<rect x="686" y="410" width="190" height="80" rx="13" fill="#F4F0FF" stroke="#D4C6EF" stroke-width="1.3"/>
+<rect x="687" y="428" width="4" height="44" rx="2" fill="#7050A2" opacity="0.7"/>
+<text x="781.0" y="450.0" font-size="21" font-weight="700" fill="#7050A2" text-anchor="middle">卷积融合网络</text>
+<text x="781.0" y="475.0" font-size="15" font-weight="400" fill="#64748B" text-anchor="middle">输出五类修正量</text>
+<rect x="908" y="263" width="180" height="80" rx="13" fill="#172B4D" opacity="0.035"/>
+<rect x="908" y="260" width="180" height="80" rx="13" fill="#EEF5FF" stroke="#B7CFF1" stroke-width="1.3"/>
+<rect x="909" y="278" width="4" height="44" rx="2" fill="#255A9D" opacity="0.7"/>
+<text x="998.0" y="300.0" font-size="21" font-weight="700" fill="#255A9D" text-anchor="middle">DINO 基础分数</text>
+<text x="998.0" y="325.0" font-size="15" font-weight="400" fill="#64748B" text-anchor="middle">log(pDINO + ε)</text>
+<rect x="908" y="413" width="180" height="80" rx="13" fill="#172B4D" opacity="0.035"/>
+<rect x="908" y="410" width="180" height="80" rx="13" fill="#F4F0FF" stroke="#D4C6EF" stroke-width="1.3"/>
+<rect x="909" y="428" width="4" height="44" rx="2" fill="#7050A2" opacity="0.7"/>
+<text x="998.0" y="450.0" font-size="21" font-weight="700" fill="#7050A2" text-anchor="middle">残差相加</text>
+<text x="998.0" y="475.0" font-size="15" font-weight="400" fill="#64748B" text-anchor="middle">基础分数＋修正量</text>
+<rect x="908" y="531" width="180" height="64" rx="13" fill="#172B4D" opacity="0.035"/>
+<rect x="908" y="528" width="180" height="64" rx="13" fill="#EAF7F3" stroke="#ACD9CB" stroke-width="1.3"/>
+<rect x="909" y="546" width="4" height="28" rx="2" fill="#267561" opacity="0.7"/>
+<text x="998.0" y="567.0" font-size="21" font-weight="700" fill="#267561" text-anchor="middle">五类分割</text>
+<text x="42" y="624" font-size="16" font-weight="400" fill="#64748B" text-anchor="start">训练：用真实五类标签监督最终结果；不手工指定各类别采用哪个模型。</text>
+</g></svg>
