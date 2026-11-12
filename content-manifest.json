@@ -1,6 +1,6 @@
 {
   "source": "docs/moonseg_model_proposal_20261113.md",
-  "source_sha256": "e1f4088b7e2df61d843b4edc178e2054c047bf25eea86be1713bd3de81e5cd84",
+  "source_sha256": "560fec2343d713fee4851c3af855c7b263110cafd3b494b7d7ad7c09c2c86a31",
   "files": [
     "artifacts/auxiliary_target_analysis_20261112/random_crop_probe.json",
     "artifacts/auxiliary_target_analysis_20261112/summary.json",
@@ -13,6 +13,8 @@
     "runs/dinov3_l16_ade20k_adapter_m2f_e20_20261112/history.jsonl",
     "runs/dinov3_l16_simple_fpn_mask2former_short/history.jsonl",
     "runs/dinov3_l16_vit_adapter_mask2former_short/history.jsonl",
+    "runs/sam3_pel14_simple_fpn_mask2former_short_adaptive/history.jsonl",
+    "runs/sam3_pel14_vit_adapter_mask2former_short_adaptive/history.jsonl",
     "runs/swin_l_ade20k_mask2former_frozen_e20_20261112/history.jsonl",
     "runs/yolo26m_e06_low3e6_bnfreeze_e4/analysis/report_multiscale_20261105/report.md",
     "runs/yolo26m_sem_b16_lr3e4_e20/history.jsonl",

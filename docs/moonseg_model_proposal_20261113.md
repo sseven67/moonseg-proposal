@@ -17,12 +17,16 @@
 | DINOv3-L＋SimpleFPN＋Mask2Former | 骨干：DINOv3 ViT-L/16，LVD-1689M；SimpleFPN 和 Mask2Former 随机初始化 | 88.07 | 78.72 | 82.67 | 81.29 |
 | DINOv3-L＋ViT-Adapter＋Mask2Former | 骨干：DINOv3 ViT-L/16，LVD-1689M；ViT-Adapter 和 Mask2Former 随机初始化 | 88.57 | 77.00 | 81.01 | 87.07 |
 | DINOv3-L＋ViT-Adapter＋Mask2Former，ADE20K权重  | 骨干：DINOv3 ViT-L/16，LVD-1689M；Adapter 和 Mask2Former：BEiT-L/16＋ViT-Adapter-L 的 ADE20K 权重（见1.2表格第一行） | **90.35** | **78.72** | **86.54** | **88.34** |
+| SAM3 PE-L+/14＋SimpleFPN＋Mask2Former | 骨干：官方 [facebook/sam3](https://huggingface.co/facebook/sam3/tree/3c879f39826c281e95690f02c7821c4de09afae7) 的 `sam3.pt`，SA-Co 系列与 SA-1B 训练；仅加载视觉主干，SimpleFPN 和 Mask2Former 随机初始化 | 80.02 | 62.91 | 77.43 | 62.77 |
+| SAM3 PE-L+/14＋ViT-Adapter＋Mask2Former | 骨干：官方 [facebook/sam3](https://huggingface.co/facebook/sam3/tree/3c879f39826c281e95690f02c7821c4de09afae7) 的 `sam3.pt`，SA-Co 系列与 SA-1B 训练；仅加载视觉主干，ViT-Adapter 和 Mask2Former 随机初始化 | 82.92 | 68.85 | 79.40 | 68.95 |
 | Swin-L＋Mask2Former，ADE20K 权重 | Swin-L＋Mask2Former 官方 ADE20K 语义分割权重，骨干上游为 ImageNet-21K（见1.2表格第二行） | 85.68 | 72.02 | 80.86 | 77.86 |
 | 原始 YOLO26m，1024 单尺度 | YOLO26m-sem 官方 Cityscapes 语义分割权重 `yolo26m-sem.pt`，上游为 COCO 实例分割初始化 | 87.43 | 74.13 | 85.38 | 79.20 |
 
 SimpleFPN 和原 Adapter 两组未加载分割预训练权重；90.35% 一组迁移第 1.2 节 A 的参数。Swin-L 一组使用第 1.2 节 B 的完整网络。各组随后均在 MoonSeg 训练集上训练。
 
-**这些实验主要为了快速测效果。DINO 与 Swin 实验冻结了编码器，训练配方也未充分优化，因此结果只说明当前设置下的表现，不能代表完整微调后的模型上限。** 
+SAM3 两组均使用 672×672 整图单尺度输入，取已有续训记录中的最佳轮次：SimpleFPN 为第 11 轮（已记录 14 轮），ViT-Adapter 为第 3 轮（已记录 10 轮）。预训练数据说明见 [SAM3 原论文模型卡](https://arxiv.org/html/2511.16719)。
+
+**这些实验主要为了快速测效果。DINO、Swin 与 SAM3 实验冻结了编码器，训练配方也未充分优化，因此结果只说明当前设置下的表现，不能代表完整微调后的模型上限。** 
 
 
 
@@ -260,3 +264,8 @@ H+ 主模型同时包含预训练模块和新增模块，因此先让新增部�
 - [DINOv3-L＋ADE20K 参数迁移](../runs/dinov3_l16_ade20k_adapter_m2f_e20_20261112/history.jsonl)
 - [Swin-L＋ADE20K 权重](../runs/swin_l_ade20k_mask2former_frozen_e20_20261112/history.jsonl)
 - [原始 YOLO26m](../runs/yolo26m_sem_b16_lr3e4_e20/history.jsonl)
+
+- [SAM3 PE-L+/14＋SimpleFPN](../runs/sam3_pel14_simple_fpn_mask2former_short_adaptive/history.jsonl)
+- [SAM3 PE-L+/14＋ViT-Adapter](../runs/sam3_pel14_vit_adapter_mask2former_short_adaptive/history.jsonl)
+- [YOLO26x-sem，Cityscapes](../runs/yolo26x_cityscapes_originalrecipe_b16_lr3e4_e20_20261112/history.jsonl)
+- [YOLO26x-sem，ADE20K](../runs/yolo26x_ade20k_enc3e5_head3e4_warm2_e20_20261112/history.jsonl)
