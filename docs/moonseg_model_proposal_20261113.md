@@ -12,15 +12,15 @@
 下面为了方便短测以及和我之前已经实验过的模型效果做对比，继续采用场景5固定 400 张验证集，其余 1、3、6、7、8 作为训练，还没有测试过刚公布的测试集（同时场景5也是在训练集中最难的，如果它的分能提高一般整体也会提高，比较有代表性）。各实验训练设置不同比如学习率、批次等等，只是用于简单筛选方向。
 以下这些实验的模型是在看近两年这类语义分割比赛中比较常见的，试了下效果都不错，实际方案打算采用 DINOv3 ViT-H+/16，实验只采用参数量小一些的DINOv3-L进行探索。
 
-| 实验 | 初始权重 | mIoU | 岩石 IoU | 撞击坑 IoU | 山体 IoU |
-| --- | --- | ---: | ---: | ---: | ---: |
-| DINOv3-L＋SimpleFPN＋Mask2Former | 骨干：DINOv3 ViT-L/16，LVD-1689M；SimpleFPN 和 Mask2Former 随机初始化 | 88.07 | 78.72 | 82.67 | 81.29 |
-| DINOv3-L＋ViT-Adapter＋Mask2Former | 骨干：DINOv3 ViT-L/16，LVD-1689M；ViT-Adapter 和 Mask2Former 随机初始化 | 88.57 | 77.00 | 81.01 | 87.07 |
-| DINOv3-L＋ViT-Adapter＋Mask2Former，ADE20K权重  | 骨干：DINOv3 ViT-L/16，LVD-1689M；Adapter 和 Mask2Former：BEiT-L/16＋ViT-Adapter-L 的 ADE20K 权重（见1.2表格第一行） | **90.35** | **78.72** | **86.54** | **88.34** |
-| SAM3 PE-L+/14＋SimpleFPN＋Mask2Former | 骨干：官方 [facebook/sam3](https://huggingface.co/facebook/sam3/tree/3c879f39826c281e95690f02c7821c4de09afae7) 的 `sam3.pt`，SA-Co 系列与 SA-1B 训练；仅加载视觉主干，SimpleFPN 和 Mask2Former 随机初始化 | 80.02 | 62.91 | 77.43 | 62.77 |
-| SAM3 PE-L+/14＋ViT-Adapter＋Mask2Former | 骨干：官方 [facebook/sam3](https://huggingface.co/facebook/sam3/tree/3c879f39826c281e95690f02c7821c4de09afae7) 的 `sam3.pt`，SA-Co 系列与 SA-1B 训练；仅加载视觉主干，ViT-Adapter 和 Mask2Former 随机初始化 | 82.92 | 68.85 | 79.40 | 68.95 |
-| Swin-L＋Mask2Former，ADE20K 权重 | Swin-L＋Mask2Former 官方 ADE20K 语义分割权重，骨干上游为 ImageNet-21K（见1.2表格第二行） | 85.68 | 72.02 | 80.86 | 77.86 |
-| 原始 YOLO26m，1024 单尺度 | YOLO26m-sem 官方 Cityscapes 语义分割权重 `yolo26m-sem.pt`，上游为 COCO 实例分割初始化 | 87.43 | 74.13 | 85.38 | 79.20 |
+| 实验 | 初始权重 | mIoU | 月壤 IoU | 岩石 IoU | 撞击坑 IoU | 山体 IoU | 天空 IoU |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| DINOv3-L＋SimpleFPN＋Mask2Former | 骨干：DINOv3 ViT-L/16，LVD-1689M；SimpleFPN 和 Mask2Former 随机初始化 | 88.07 | 98.36 | 78.72 | 82.67 | 81.29 | 99.28 |
+| DINOv3-L＋ViT-Adapter＋Mask2Former | 骨干：DINOv3 ViT-L/16，LVD-1689M；ViT-Adapter 和 Mask2Former 随机初始化 | 88.57 | 98.52 | 77.00 | 81.01 | 87.07 | 99.26 |
+| DINOv3-L＋ViT-Adapter＋Mask2Former，ADE20K权重 | 骨干：DINOv3 ViT-L/16，LVD-1689M；Adapter 和 Mask2Former：BEiT-L/16＋ViT-Adapter-L 的 ADE20K 权重（见1.2表格第一行） | **90.35** | **98.83** | **78.72** | **86.54** | **88.34** | **99.29** |
+| SAM3 PE-L+/14＋SimpleFPN＋Mask2Former | 骨干：官方 [facebook/sam3](https://huggingface.co/facebook/sam3/tree/3c879f39826c281e95690f02c7821c4de09afae7) 的 `sam3.pt`，SA-Co 系列与 SA-1B 训练；仅加载视觉主干，SimpleFPN 和 Mask2Former 随机初始化 | 80.02 | 97.89 | 62.91 | 77.43 | 62.77 | 99.10 |
+| SAM3 PE-L+/14＋ViT-Adapter＋Mask2Former | 骨干：官方 [facebook/sam3](https://huggingface.co/facebook/sam3/tree/3c879f39826c281e95690f02c7821c4de09afae7) 的 `sam3.pt`，SA-Co 系列与 SA-1B 训练；仅加载视觉主干，ViT-Adapter 和 Mask2Former 随机初始化 | 82.92 | 98.08 | 68.85 | 79.40 | 68.95 | 99.32 |
+| Swin-L＋Mask2Former，ADE20K 权重 | Swin-L＋Mask2Former 官方 ADE20K 语义分割权重，骨干上游为 ImageNet-21K（见1.2表格第二行） | 85.68 | 98.37 | 72.02 | 80.86 | 77.86 | 99.28 |
+| 原始 YOLO26m，1024 单尺度 | YOLO26m-sem 官方 Cityscapes 语义分割权重 `yolo26m-sem.pt`，上游为 COCO 实例分割初始化 | 87.43 | 98.81 | 74.13 | 85.38 | 79.20 | 99.64 |
 
 SimpleFPN 和原 Adapter 两组未加载分割预训练权重；90.35% 一组迁移第 1.2 节 A 的参数。Swin-L 一组使用第 1.2 节 B 的完整网络。各组随后均在 MoonSeg 训练集上训练。
 
