@@ -57,11 +57,11 @@ SAM3 两组均使用 672×672 整图单尺度输入，取已有续训记录中�
 早期实验结果发现中YOLO26m-sem 的撞击坑分类结果优于DINOv3-L＋SimpleFPN＋Mask2Former（权重随机初始化版）方案，因此考虑让两个模型互补。迁移实验官方公开的ADE20K 权重后，DINO 自身的撞击坑结果已明显提高，因此**融合不一定有价值，看后续完整实验有没有必要吧**。
 做了yolo26系列更大参数的**YOLO26x 补充实验。** 使用 YOLO26x-sem（x 规模语义分割版），分别从官方 Cityscapes 权重 `yolo26x-sem.pt` 和 ADE20K 权重 `yolo26x-sem-ade20k.pt` 初始化，再训练 MoonSeg 五类。以下均为 Moon_5 固定 400 张、1024 整图单尺度推理的最佳 EMA 记录，单位为 %。
 
-| 模型与分割预训练来源 | mIoU | 岩石 IoU | 撞击坑 IoU | 山体 IoU | 最佳轮次／已记录轮数 |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| [YOLO26m-sem，Cityscapes](../runs/yolo26m_sem_b16_lr3e4_e20/history.jsonl) | 87.43 | 74.13 | 85.38 | 79.20 | 6／20 |
-| [YOLO26x-sem，Cityscapes](../runs/yolo26x_cityscapes_originalrecipe_b16_lr3e4_e20_20261112/history.jsonl) | 82.86 | 62.72 | 88.74 | 64.13 | 4／10 |
-| [YOLO26x-sem，ADE20K](../runs/yolo26x_ade20k_enc3e5_head3e4_warm2_e20_20261112/history.jsonl) | 82.15 | 62.82 | 85.31 | 64.02 | 5／8 |
+| 模型与分割预训练来源 | mIoU | 月壤 IoU | 岩石 IoU | 撞击坑 IoU | 山体 IoU | 天空 IoU | 最佳轮次／已记录轮数 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| [YOLO26m-sem，Cityscapes](../runs/yolo26m_sem_b16_lr3e4_e20/history.jsonl) | 87.43 | 98.81 | 74.13 | 85.38 | 79.20 | 99.64 | 6／20 |
+| [YOLO26x-sem，Cityscapes](../runs/yolo26x_cityscapes_originalrecipe_b16_lr3e4_e20_20261112/history.jsonl) | 82.86 | 99.01 | 62.72 | 88.74 | 64.13 | 99.73 | 4／10 |
+| [YOLO26x-sem，ADE20K](../runs/yolo26x_ade20k_enc3e5_head3e4_warm2_e20_20261112/history.jsonl) | 82.15 | 98.89 | 62.82 | 85.31 | 64.02 | 99.72 | 5／8 |
 
 结果发现整体 mIoU 比 m 版低 **4.57 个百分点**。
 Cityscapes 组沿用原始 m 版训练配方；ADE20K 组采用编码器／分割头分组学习率。官方验证集是x比m版高了一点多各百分点，我不好说本次实验效果x版更低的原因（ai也没分析出什么来，实验已调整学习率），结论是目前不适合直接替代 m 版。
