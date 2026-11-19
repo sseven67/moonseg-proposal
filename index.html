@@ -463,7 +463,7 @@ L_{\mathrm{mask}}=\frac{\sum_{q=1}^{N}w_q\ell_q}{\sum_{q=1}^{N}w_q}
 </ul>
 <h2 id="section-19">9. 比赛报告初稿方案与全测试集结果</h2>
 <h3 id="section-20">9.1 当前最佳方案</h3>
-<p>报告初稿的主模型采用 <strong>DINOv3 ViT-H+/16＋ViT-Adapter＋Mask2Former</strong>。训练使用 Moon_1、Moon_3、Moon_5、Moon_6、Moon_7、Moon_8 的 8,002 张图，选用 <strong>第 7 轮 EMA 权重</strong>。</p>
+<p>报告初稿的主模型采用 <strong>DINOv3 ViT-H+/16＋ViT-Adapter＋Mask2Former</strong>，训练时加入 <strong>混合视野下的 CLS 类别存在性监督</strong>。训练使用 Moon_1、Moon_3、Moon_5、Moon_6、Moon_7、Moon_8 的 8,002 张图，选用 <strong>第 7 轮 EMA 权重</strong>。</p>
 <p><strong>模型与预训练权重。</strong> DINOv3 H+ 骨干使用 LVD-1689M 预训练权重。ViT-Adapter 与 Mask2Former 迁移 BEiT-L/16 方案的 ADE20K 分割权重，来源见第 1.2 节权重表第一行。保留 1024 维 Adapter，通过 1280→1024 投影读取 H+ 特征，通过 1024→1280 投影向骨干写回残差。两组投影新建，写回投影从零初始化。Mask2Former 的查询分类层重新初始化，输出五个语义类和一个「无目标」类。可引用第 1 节的「主模型架构」图和第 1.2 节的权重来源表。<a href="#section-2">第 1 节主模型</a> · <a href="#section-4">第 1.2 节权重来源</a></p>
 <p><strong>混合视野与 CLS 监督。</strong> 每次读取一张图只采样一个视图。60% 保留整图，20% 在原图内均匀随机取 640×640 窗口，20% 取 512×512 窗口。裁剪后将 RGB 双线性缩放至 1024×1024，标签使用相同窗口和最近邻插值。整图保持 1024×1024。引用第 3.1 节的采样说明和第 7.2 节的增强表时，将早期的 50%／25%／25% 改为 60%／20%／20%，将统一输入尺寸从 640×640 改为 1024×1024。<a href="#section-7">第 3.1 节混合视野</a> · <a href="#section-14">第 7.2 节数据增强</a></p>
 <p><strong>训练时使用随机水平翻转。</strong> 整图和裁剪视图均以 50% 的概率将 RGB 图像与分割标签同步水平翻转。<a href="#section-14">第 7.2 节数据增强</a></p>

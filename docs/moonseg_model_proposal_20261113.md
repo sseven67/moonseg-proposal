@@ -274,7 +274,7 @@ H+ 主模型同时包含预训练模块和新增模块，因此先让新增部�
 
 ### 9.1 当前最佳方案
 
-报告初稿的主模型采用 **DINOv3 ViT-H+/16＋ViT-Adapter＋Mask2Former**。训练使用 Moon_1、Moon_3、Moon_5、Moon_6、Moon_7、Moon_8 的 8,002 张图，选用 **第 7 轮 EMA 权重**。
+报告初稿的主模型采用 **DINOv3 ViT-H+/16＋ViT-Adapter＋Mask2Former**，训练时加入 **混合视野下的 CLS 类别存在性监督**。训练使用 Moon_1、Moon_3、Moon_5、Moon_6、Moon_7、Moon_8 的 8,002 张图，选用 **第 7 轮 EMA 权重**。
 
 **模型与预训练权重。** DINOv3 H+ 骨干使用 LVD-1689M 预训练权重。ViT-Adapter 与 Mask2Former 迁移 BEiT-L/16 方案的 ADE20K 分割权重，来源见第 1.2 节权重表第一行。保留 1024 维 Adapter，通过 1280→1024 投影读取 H+ 特征，通过 1024→1280 投影向骨干写回残差。两组投影新建，写回投影从零初始化。Mask2Former 的查询分类层重新初始化，输出五个语义类和一个「无目标」类。可引用第 1 节的「主模型架构」图和第 1.2 节的权重来源表。[第 1 节主模型](#section-2) · [第 1.2 节权重来源](#section-4)
 

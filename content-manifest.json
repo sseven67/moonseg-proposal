@@ -1,6 +1,6 @@
 {
   "source": "docs/moonseg_model_proposal_20261113.md",
-  "source_sha256": "97eedff3e29cb2f24ce2728c6affd896a34624eafe943410600820495ab16a58",
+  "source_sha256": "684da5051af6a1e5d0b502725209045d1a15334f1211a0ee3caa410e94841960",
   "files": [
     "artifacts/auxiliary_target_analysis_20261112/random_crop_probe.json",
     "artifacts/auxiliary_target_analysis_20261112/summary.json",
