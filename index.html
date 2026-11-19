@@ -463,9 +463,38 @@ L_{\mathrm{mask}}=\frac{\sum_{q=1}^{N}w_q\ell_q}{\sum_{q=1}^{N}w_q}
 </ul>
 <h2 id="section-19">9. 比赛报告初稿方案与全测试集结果</h2>
 <h3 id="section-20">9.1 当前最佳方案</h3>
-<p>比赛报告初稿可采用 <strong>DINOv3 H+＋ViT-Adapter＋Mask2Former，加入混合视野下的 CLS 类别存在性监督</strong>。使用 Moon_1、Moon_3、Moon_5、Moon_6、Moon_7、Moon_8 的 8,002 张图训练。从预训练权重初始化，首轮起解冻全部 32 个骨干 block。骨干末层和任务模块的峰值学习率分别为 <code>3e-6</code> 和 <code>3e-5</code>。</p>
-<p>训练时以 60% 的概率使用整图，以 20% 的概率随机裁剪 640×640 区域，以 20% 的概率随机裁剪 512×512 区域。图像与标签使用同一裁剪窗口，统一缩放到 1024×1024。分类头从最后一层 CLS token 预测当前视野中五类各自是否出现，目标从变换后的分割标签生成，多标签二元交叉熵权重为 0.1。裁剪使同一场景的不同视野可以提供不同的类别组合，为共享骨干补充全局类别监督。</p>
-<p>推理使用 <strong>第 7 轮 EMA 权重</strong>，对整图做一次 1024×1024 单尺度预测。CLS 分类头仅参与训练，推理沿用分割路径。</p>
+<p>报告初稿的主模型采用 <strong>DINOv3 ViT-H+/16＋ViT-Adapter＋Mask2Former</strong>，方法章节的主要改动写 <strong>混合视野下的 CLS 类别存在性监督</strong>。训练使用 Moon_1、Moon_3、Moon_5、Moon_6、Moon_7、Moon_8 的 8,002 张图，选用 <strong>第 7 轮 EMA 权重</strong>。</p>
+<p><strong>模型与预训练权重。</strong> DINOv3 H+ 骨干使用 LVD-1689M 预训练权重。ViT-Adapter 与 Mask2Former 迁移 BEiT-L/16 方案的 ADE20K 分割权重，来源见第 1.2 节权重表第一行。保留 1024 维 Adapter，通过 1280→1024 投影读取 H+ 特征，通过 1024→1280 投影向骨干写回残差。两组投影新建，写回投影从零初始化。Mask2Former 的查询分类层重新初始化，输出五个语义类和一个「无目标」类。可引用第 1 节的「主模型架构」图和第 1.2 节的权重来源表。<a href="#section-2">第 1 节主模型</a> · <a href="#section-4">第 1.2 节权重来源</a></p>
+<p><strong>混合视野与 CLS 监督。</strong> 每次读取一张图只采样一个视图。60% 保留整图，20% 在原图内均匀随机取 640×640 窗口，20% 取 512×512 窗口。裁剪后将 RGB 双线性缩放至 1024×1024，标签使用相同窗口和最近邻插值。整图保持 1024×1024。三种视图均以 50% 概率同步水平翻转。引用第 3.1 节的采样说明和第 7.2 节的增强表时，将早期的 50%／25%／25% 改为 60%／20%／20%，将统一输入尺寸从 640×640 改为 1024×1024。<a href="#section-7">第 3.1 节混合视野</a> · <a href="#section-14">第 7.2 节数据增强</a></p>
+<p>每次几何变换完成后，从对应标签生成五维向量，顺序为月壤、岩石、撞击坑、山体、天空。某类至少出现一个有效像素就记为 1，其余记为 0。将骨干最后一层归一化后的 1280 维 CLS token 输入 <code>Linear(1280, 5)</code>，用带 logits 的多标签二元交叉熵（BCE）训练。主分割损失继续使用匈牙利匹配、查询分类交叉熵，以及匹配掩码的 BCE 和 Dice。CLS 损失在主分割损失之外加一次，权重在前 500 个优化步中线性升至 0.1。第 3.2 节的「混合视野与 CLS 辅助监督流程」图可用于方法章节，复用时替换视图概率和输入尺寸，并把分类头标成「骨干末层归一化 CLS → Linear(1280, 5)」。<a href="#section-8">第 3.2 节 CLS 流程图与损失</a></p>
+<p><strong>训练与选模。</strong> 第 7.1 节的分组学习率、辅助损失预热和 EMA 用于本次实验。解冻策略从前文建议的分阶段微调改为首轮解冻骨干全部 32 个 Transformer block。实际训练设置如下。<a href="#section-13">第 7.1 节训练策略</a></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>设置</th>
+<th>比赛报告采用值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>优化器与批大小</td>
+<td>AdamW，4 张 H800，全局 batch 16，随机种子 42</td>
+</tr>
+<tr>
+<td>峰值学习率</td>
+<td>骨干末个 block <code>3e-6</code>，向前逐层乘 <code>0.95</code>。骨干嵌入层 <code>6e-7</code>，骨干末层归一化 <code>1.5e-6</code>。Adapter、双向投影、Mask2Former 和 CLS 头 <code>3e-5</code></td>
+</tr>
+<tr>
+<td>学习率调度</td>
+<td>500 步线性预热，余弦调度跨度为 26 轮。该跨度用于计算学习率，初稿采用第 7 轮权重</td>
+</tr>
+<tr>
+<td>EMA 与选模</td>
+<td>每次优化器更新后以 <code>0.999</code> 衰减更新 EMA。每轮用 1,000 张整图分别验证普通权重和 EMA，第 7 轮 EMA 在该子集上取得 93.8314% 加权 mIoU</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>推理与报告配图。</strong> 推理直接输入 1024×1024 整图，运行一次分割模型。Mask2Former 将各查询的类别概率与对应掩码概率相乘并求和，将五类分数上采样至原图尺寸，按像素取最大分数对应的类别。CLS 头只参与训练。若以第 8 节的「完整模型架构与训练监督」图为底稿，报告图保留主分割路径和 CLS 虚线分支，输入改标 1024×1024，删去像素辅助、Patch 辅助和掩码加权标记。配图旁的数据划分使用本节的 8,002 张训练图和第 9.2 节的 Moon_2／Moon_4／Moon_9 测试口径。<a href="#section-17">第 8 节完整结构图</a> · <a href="#section-21">第 9.2 节测试口径</a></p>
 <h3 id="section-21">9.2 全测试集成绩与方案对照</h3>
 <p>在 LuSNAR 的 Moon_2、Moon_4、Moon_9 共 <strong>5,004 张</strong>测试图上，本地加权 <strong>mIoU 为 93.8127%</strong>。按场景合并同一权重在 1,000 张选模子集与其余 4,004 张图上的混淆矩阵，再计算逐类 IoU 和场景 mIoU。最后按 <code>1:1:2</code> 加权。表中逐类加权 IoU 与 mIoU 使用相同的场景权重。</p>
 <div class="table-wrap"><table>
@@ -524,12 +553,62 @@ L_{\mathrm{mask}}=\frac{\sum_{q=1}^{N}w_q\ell_q}{\sum_{q=1}^{N}w_q}
 </tr>
 </tbody>
 </table></div>
-<p>按同样的全测试口径，纯分割训练的候选权重为 <strong>93.25%</strong>，仅加像素辅助监督为 <strong>93.09%</strong>，仅加 Patch 软标签监督为 <strong>92.94%</strong>，低骨干学习率下组合像素辅助、Patch 软标签和撞击坑掩码加权为 <strong>92.75%</strong>。当前 CLS 方案比纯分割候选高 <strong>0.56 个百分点</strong>，其中 Moon_9 撞击坑 IoU 从 <strong>81.20%</strong> 升至 <strong>84.11%</strong>。这些结果比较的是各方案已选权重的完整配方，可作为初稿采用 CLS 的依据。全测试包含选模用的 1,000 张图，表中数值为本地评测，正式成绩以比赛提交评测为准。</p>
+<p>下表比较各配方已选权重在相同 5,004 张测试图上的结果。表中的辅助项权重为预热结束后的设定值。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>训练方案</th>
+<th>实际改动</th>
+<th>评测权重</th>
+<th style="text-align:right">全测试加权 mIoU</th>
+<th style="text-align:right">Moon_9 撞击坑 IoU</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>混合视野＋CLS</strong></td>
+<td>40% 随机裁 640 或 512，CLS BCE 权重 <code>0.1</code></td>
+<td><strong>第 7 轮 EMA</strong></td>
+<td style="text-align:right"><strong>93.81%</strong></td>
+<td style="text-align:right"><strong>84.11%</strong></td>
+</tr>
+<tr>
+<td>纯分割</td>
+<td>20% 随机裁 768，使用 Mask2Former 基础损失</td>
+<td>第 9 轮 EMA</td>
+<td style="text-align:right">93.25%</td>
+<td style="text-align:right">81.20%</td>
+</tr>
+<tr>
+<td>像素辅助</td>
+<td>在共享 mask feature 上加五类像素分类，权重 <code>0.1</code>。<a href="#section-9">第 4 节</a></td>
+<td>第 10 轮 EMA</td>
+<td style="text-align:right">93.09%</td>
+<td style="text-align:right">80.19%</td>
+</tr>
+<tr>
+<td>Patch 软标签</td>
+<td>用 16×16 区域的五类像素比例监督 patch token，权重 <code>0.05</code>。<a href="#section-10">第 5 节</a></td>
+<td>第 8 轮 EMA</td>
+<td style="text-align:right">92.94%</td>
+<td style="text-align:right">79.33%</td>
+</tr>
+<tr>
+<td>低学习率组合</td>
+<td>像素辅助 <code>0.1</code>、Patch 软标签 <code>0.05</code>，撞击坑掩码 BCE 与 Dice 加权 <code>1.15</code>，骨干末层峰值学习率 <code>3e-7</code>。<a href="#section-11">第 6 节</a></td>
+<td>第 5 轮普通权重</td>
+<td style="text-align:right">92.75%</td>
+<td style="text-align:right">80.54%</td>
+</tr>
+</tbody>
+</table></div>
+<p>混合视野＋CLS 比纯分割方案的加权 mIoU 高 <strong>0.56 个百分点</strong>，Moon_9 撞击坑 IoU 高 <strong>2.90 个百分点</strong>。这组比较同时改变了裁剪概率、裁剪窗口和训练监督，适合报告整套配方的收益。若要量化 CLS 的单独贡献，需要在同一 60%／20%／20% 裁剪配置下增设纯分割对照。全测试包含选模用的 1,000 张图，表中数值为本地评测，正式成绩以比赛提交评测为准。</p>
 <h3 id="section-22">9.3 后续实验</h3>
 <ol>
-<li>保留 CLS，调整随机裁剪的触发概率和裁剪窗口尺寸范围，观察整图上下文与局部细节对逐类 IoU 的影响。</li>
-<li>在 CLS 方案上逐项叠加像素辅助监督、Patch 软标签或撞击坑掩码加权，比较它们与 CLS 同时使用时的表现。</li>
-<li>用同一权重评估测试时增强（TTA），分别检查多尺度整图和水平翻转的收益、耗时及正式提交规则。视边界效果，考虑在 Pixel Decoder 加入 SAPA 内容感知上采样，重点检查小岩石和撞击坑边缘。</li>
+<li><strong>调整裁剪概率和窗口范围。</strong> 从 40% 裁剪概率和 512／640 两档窗口起步，先固定窗口比较裁剪频率，再固定裁剪频率比较窗口尺寸。保留 1024×1024 的实际输入，跟踪岩石、撞击坑和山体 IoU，观察局部细节与完整地形上下文的取舍。<a href="#section-7">第 3.1 节裁剪抽样依据</a></li>
+<li><strong>尝试与 CLS 组合。</strong> 以混合视野＋CLS 为对照，分别叠加共享 mask feature 的五类像素监督、patch token 的区域类别比例监督和撞击坑掩码 BCE／Dice 加权。先比较单项叠加的结果，再决定保留哪些组合。<a href="#section-9">第 4 节像素辅助</a> · <a href="#section-10">第 5 节 Patch 软标签</a> · <a href="#section-11">第 6 节掩码加权</a></li>
+<li><strong>评估测试时增强（TTA）。</strong> 固定权重，以单尺度整图作为对照，分别评估多尺度整图和水平翻转。各视图类别分数先还原到相同尺寸和方向，再平均并生成标签。比较加权 mIoU、逐类 IoU 和单图耗时，提交设置按比赛规则确认。<a href="#section-15">第 7.3 节单模型推理</a></li>
+<li><strong>视边界误差尝试 SAPA。</strong> 在 Pixel Decoder 的高低分辨率特征融合处用 SAPA 替换双线性上采样，先和原结构单独比较，重点核对小岩石和撞击坑边缘的分割变化。<a href="#section-16">第 7.4 节 SAPA 接入位置</a></li>
 </ol>
 </article></main></div>
 <dialog id="image-dialog"><button id="close-image" aria-label="关闭架构图">×</button><img alt="架构图放大预览"></dialog><script src="app.js"></script></body></html>
